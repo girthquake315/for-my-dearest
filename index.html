@@ -3,197 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Jar of Smiles</title>
+    <title>for ramona</title>
     <style>
-        /* Base Styling */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #fdf6f6; /* Soft, warm background */
-            color: #4a4a4a;
+            font-family: Arial, sans-serif;
+            background: #fafafa;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
         }
 
-        h1 {
-            color: #d17a7a;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        p.subtitle {
-            color: #8c8c8c;
-            margin-bottom: 30px;
-        }
-
-        /* The Jar Container & Animation */
+        /* Large, focal minimalist jar */
         .jar-container {
-            position: relative;
             cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .jar-container:hover {
-            transform: scale(1.05);
-        }
-
-        /* Pure CSS Mason Jar */
-        .jar {
-            width: 140px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.6);
-            border: 4px solid #b5d5d5;
-            border-radius: 20px 20px 40px 40px;
+            width: 100%;
+            max-width: 380px;
+            height: 520px;
+            background: #ffffff;
+            border: 3px solid #333333;
+            border-radius: 30px 30px 60px 60px;
             position: relative;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Jar Lid */
-        .jar::before {
+        .jar-container::before {
             content: '';
             position: absolute;
             top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 160px;
             height: 15px;
-            background: #e0adad;
-            border-radius: 5px 5px 0 0;
-            border: 4px solid #ca9494;
-            border-bottom: none;
-        }
-
-        /* Little Tag on the Jar */
-        .jar-tag {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #fffdf6;
-            border: 2px dashed #ca9494;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            color: #ca9494;
-            font-weight: bold;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        /* The Compliment Box */
-        .compliment-box {
-            margin-top: 30px;
-            min-height: 80px;
-            max-width: 400px;
-            width: 100%;
-            padding: 20px;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 3px solid #333333;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .jar-content {
+            width: 100%;
+            height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+        }
+
+        /* Simple polaroid style image frame */
+        .couple-photo {
+            width: 95%;
+            max-height: 260px;
+            object-fit: cover;
+            border: 1px solid #eeeeee;
+            padding: 6px;
+            background: #ffffff;
+            margin-bottom: 25px;
+            display: none; /* Hidden until clicked */
+        }
+
+        .note-text {
             font-size: 1.1rem;
-            font-weight: 500;
             line-height: 1.5;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
+            padding: 0 10px;
+            color: #222222;
         }
 
-        .compliment-box.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hint text */
-        .hint {
-            font-size: 0.85rem;
-            color: #b5b5b5;
-            margin-top: 10px;
-        }
-
-        /* Shaking animation when clicked */
-        @keyframes shake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            20% { transform: translate(-5px, 0) rotate(-5deg); }
-            40% { transform: translate(5px, 0) rotate(5deg); }
-            60% { transform: translate(-5px, 0) rotate(-5deg); }
-            80% { transform: translate(5px, 0) rotate(5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        .shake {
-            animation: shake 0.4s ease;
+        .click-hint {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #888888;
         }
     </style>
 </head>
 <body>
 
-    <h1>A Jar Full of Reasons</h1>
-    <p class="subtitle">Click the jar whenever you need a reminder.</p>
-
-    <!-- The interactive Jar -->
-    <div class="jar-container" id="jarContainer" onclick="drawCompliment()">
-        <div class="jar">
-            <div class="jar-tag">Open Me ♥</div>
+    <div class="jar-container" onclick="drawNote()">
+        <div class="jar-content">
+            <img id="photoDisplay" class="couple-photo" src="" alt="us">
+            <div id="textDisplay" class="note-text">
+                tap the jar
+            </div>
         </div>
     </div>
-    
-    <p class="hint">Tap to reach inside</p>
 
-    <!-- Where the compliment pops up -->
-    <div class="compliment-box" id="complimentBox">
-        Click the jar to pull out a note!
-    </div>
+    <div class="click-hint">click anywhere on the jar to change it</div>
 
     <script>
-        // --- ADD YOUR CUSTOM COMPLIMENTS HERE ---
-        const compliments = [
-            "Your laugh is literally my favorite sound in the world.",
-            "You are so incredibly resilient, and I admire your strength every day.",
-            "Just thinking about you makes my hardest days so much easier.",
-            "I love the specific way your eyes light up when you're excited about something.",
-            "You make the world a softer, kinder place just by being in it.",
-            "You are my favorite person to do absolutely nothing with.",
-            "I'm so incredibly proud of you and everything you do.",
-            "You have the most beautiful heart I've ever known."
+        // Core notes matched up with file names we will upload
+        const standardNotes = [
+            {
+                text: "i truly think you're the prettiest girl in the world",
+                image: "pic1.png"
+            },
+            {
+                text: "you're such an easy person to love",
+                image: "pic2.png"
+            },
+            {
+                text: "ever since the day i met you, you've been on my mind almost every minute of the day",
+                image: "pic3.png"
+            },
+            {
+                text: "i truly think you're the prettiest girl in the world",
+                image: "pic4.png"
+            }
         ];
+
+        // The rare note matched up with your suit/formal picture
+        const rareNote = {
+            text: "i can see myself marrying you someday ramona",
+            image: "pic5.png"
+        };
 
         let lastIndex = -1;
 
-        function drawCompliment() {
-            const jar = document.getElementById('jarContainer');
-            const box = document.getElementById('complimentBox');
+        function drawNote() {
+            const textDisplay = document.getElementById('textDisplay');
+            const photoDisplay = document.getElementById('photoDisplay');
             
-            // Add the shaking effect
-            jar.classList.add('shake');
-            
-            // Remove the shake class after animation finishes so it can be re-triggered
-            setTimeout(() => {
-                jar.classList.remove('shake');
-            }, 400);
+            let selectedNote;
 
-            // Hide the box slightly for a smooth fade-in transition
-            box.classList.remove('show');
-
-            setTimeout(() => {
-                // Pick a random compliment (ensuring it doesn't repeat the exact same one twice in a row)
+            // 10% chance for the rare marriage note, 90% for standard notes
+            if (Math.random() < 0.10) {
+                selectedNote = rareNote;
+            } else {
                 let randomIndex;
                 do {
-                    randomIndex = Math.floor(Math.random() * compliments.length);
-                } while (randomIndex === lastIndex && compliments.length > 1);
+                    randomIndex = Math.floor(Math.random() * standardNotes.length);
+                } while (randomIndex === lastIndex && standardNotes.length > 1);
                 
                 lastIndex = randomIndex;
-                
-                // Display the new compliment
-                box.innerText = compliments[randomIndex];
-                box.classList.add('show');
-            }, 200);
+                selectedNote = standardNotes[randomIndex];
+            }
+
+            // Zero transitions, clean instant text and picture swap
+            textDisplay.innerText = selectedNote.text;
+            photoDisplay.src = selectedNote.image;
+            photoDisplay.style.display = "block";
         }
     </script>
 </body>
