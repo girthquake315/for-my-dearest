@@ -28,12 +28,12 @@
             cursor: pointer;
             width: 100%;
             max-width: 380px;
-            height: 520px;
+            height: 540px;
             background: #ffffff;
             border: 3px solid #333333;
             border-radius: 30px 30px 60px 60px;
             position: relative;
-            padding: 30px 20px;
+            padding: 25px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -63,16 +63,16 @@
             text-align: center;
         }
 
-        /* Simple polaroid style image frame */
+        /* Polaroid style image frame - uncropped */
         .couple-photo {
             width: 95%;
-            max-height: 260px;
-            object-fit: cover;
+            height: 280px;
+            object-fit: contain;
             border: 1px solid #eeeeee;
             padding: 6px;
             background: #ffffff;
-            margin-bottom: 25px;
-            display: none; /* Hidden until clicked */
+            margin-bottom: 20px;
+            display: none; 
         }
 
         .note-text {
@@ -103,31 +103,39 @@
     <div class="click-hint">click anywhere on the jar to change it</div>
 
     <script>
-        // Core notes matched up with file names we will upload
+        // The 4 general photo files to rotate randomly
+        const generalPhotos = ["./pic1.png", "./pic2.png", "./pic3.png", "./pic4.png"];
+
+        // All 23 standard notes compiled together
         const standardNotes = [
-            {
-                text: "i truly think you're the prettiest girl in the world",
-                image: "pic1.png"
-            },
-            {
-                text: "you're such an easy person to love",
-                image: "pic2.png"
-            },
-            {
-                text: "ever since the day i met you, you've been on my mind almost every minute of the day",
-                image: "pic3.png"
-            },
-            {
-                text: "i truly think you're the prettiest girl in the world",
-                image: "pic4.png"
-            }
+            "i truly think you're the prettiest girl in the world",
+            "you're such an easy person to love",
+            "ever since the day i met you, you've been on my mind almost every minute of the day",
+            "you have the cutest smile i've ever seen",
+            "i love being around you because you let me be my true self",
+            "when im with you nothing ever feels boring",
+            "you're my favorite person to talk to about everything in the world",
+            "embarassing but i still get butterflies when im about to see you",
+            "i love the way we stare into eachothers eyes",
+            "you coming into my life was genuinely a miracle",
+            "i love you so much",
+            "i like to think that you've changed me forever, in a good way",
+            "you make me wanna be a better me",
+            "whenever im sad you're always the first person i go to",
+            "i value you more than anything else",
+            "everynight when we call, i feel more loved than i ever have before",
+            "you make me feel loved in a way i've never felt before",
+            "before dating you i thought i was incapable of love but you proved me wrong",
+            "i love every aspect of you",
+            "i love your hair",
+            "you're the prettiest girl in the world",
+            "you're the sweetest girl in the world",
+            "im willing to sacrifice whatever's necessary for us to succeed"
         ];
 
-        // The rare note matched up with your suit/formal picture
-        const rareNote = {
-            text: "i can see myself marrying you someday ramona",
-            image: "pic5.png"
-        };
+        // The rare marriage note + its locked formal suit photo
+        const rareNoteText = "i can see myself marrying you someday ramona";
+        const rareNoteImage = "./pic5.png";
 
         let lastIndex = -1;
 
@@ -135,24 +143,31 @@
             const textDisplay = document.getElementById('textDisplay');
             const photoDisplay = document.getElementById('photoDisplay');
             
-            let selectedNote;
+            let selectedText = "";
+            let selectedImage = "";
 
-            // 10% chance for the rare marriage note, 90% for standard notes
+            // 10% chance for the rare marriage note setup
             if (Math.random() < 0.10) {
-                selectedNote = rareNote;
+                selectedText = rareNoteText;
+                selectedImage = rareNoteImage;
             } else {
+                // Otherwise roll standard notes cleanly without direct repeats
                 let randomIndex;
                 do {
                     randomIndex = Math.floor(Math.random() * standardNotes.length);
                 } while (randomIndex === lastIndex && standardNotes.length > 1);
                 
                 lastIndex = randomIndex;
-                selectedNote = standardNotes[randomIndex];
+                selectedText = standardNotes[randomIndex];
+                
+                // Assign a completely random general photo (pic1 through pic4)
+                const randomPhotoIndex = Math.floor(Math.random() * generalPhotos.length);
+                selectedImage = generalPhotos[randomPhotoIndex];
             }
 
-            // Zero transitions, clean instant text and picture swap
-            textDisplay.innerText = selectedNote.text;
-            photoDisplay.src = selectedNote.image;
+            // Apply immediately without flashy animations
+            textDisplay.innerText = selectedText;
+            photoDisplay.src = selectedImage;
             photoDisplay.style.display = "block";
         }
     </script>
